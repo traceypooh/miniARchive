@@ -1,15 +1,15 @@
 //
-//  minime_ARchiveTests.swift
-//  minime ARchiveTests
+//  miniARchiveTests.swift
+//  miniARchiveTests
 //
 //  Created by tracey on 9/23/17.
 //  Copyright © 2017 tracey. All rights reserved.
 //
 
 import XCTest
-@testable import minime_ARchive
+@testable import miniARchive
 
-class minime_ARchiveTests: XCTestCase {
+class miniARchiveTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

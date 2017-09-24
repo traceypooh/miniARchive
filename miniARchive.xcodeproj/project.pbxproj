@@ -14,8 +14,8 @@
 		40EE8CD41F7707310054D889 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40EE8CD21F7707310054D889 /* Main.storyboard */; };
 		40EE8CD61F7707310054D889 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40EE8CD51F7707310054D889 /* Assets.xcassets */; };
 		40EE8CD91F7707310054D889 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40EE8CD71F7707310054D889 /* LaunchScreen.storyboard */; };
-		40EE8CE41F7707310054D889 /* minime_ARchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE8CE31F7707310054D889 /* minime_ARchiveTests.swift */; };
-		40EE8CEF1F7707310054D889 /* minime_ARchiveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE8CEE1F7707310054D889 /* minime_ARchiveUITests.swift */; };
+		40EE8CE41F7707310054D889 /* miniARchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE8CE31F7707310054D889 /* miniARchiveTests.swift */; };
+		40EE8CEF1F7707310054D889 /* miniARchiveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE8CEE1F7707310054D889 /* miniARchiveUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,19 +24,19 @@
 			containerPortal = 40EE8CBF1F7707310054D889 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 40EE8CC61F7707310054D889;
-			remoteInfo = "minime ARchive";
+			remoteInfo = "miniARchive";
 		};
 		40EE8CEB1F7707310054D889 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 40EE8CBF1F7707310054D889 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 40EE8CC61F7707310054D889;
-			remoteInfo = "minime ARchive";
+			remoteInfo = "miniARchive";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		40EE8CC71F7707310054D889 /* minime ARchive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "minime ARchive.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		40EE8CC71F7707310054D889 /* miniARchive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "miniARchive.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40EE8CCA1F7707310054D889 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40EE8CCC1F7707310054D889 /* Scene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Scene.sks; sourceTree = "<group>"; };
 		40EE8CCE1F7707310054D889 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
@@ -45,11 +45,11 @@
 		40EE8CD51F7707310054D889 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40EE8CD81F7707310054D889 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		40EE8CDA1F7707310054D889 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		40EE8CDF1F7707310054D889 /* minime ARchiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "minime ARchiveTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		40EE8CE31F7707310054D889 /* minime_ARchiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = minime_ARchiveTests.swift; sourceTree = "<group>"; };
+		40EE8CDF1F7707310054D889 /* miniARchiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "miniARchiveTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		40EE8CE31F7707310054D889 /* miniARchiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = miniARchiveTests.swift; sourceTree = "<group>"; };
 		40EE8CE51F7707310054D889 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		40EE8CEA1F7707310054D889 /* minime ARchiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "minime ARchiveUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		40EE8CEE1F7707310054D889 /* minime_ARchiveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = minime_ARchiveUITests.swift; sourceTree = "<group>"; };
+		40EE8CEA1F7707310054D889 /* miniARchiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "miniARchiveUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		40EE8CEE1F7707310054D889 /* miniARchiveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = miniARchiveUITests.swift; sourceTree = "<group>"; };
 		40EE8CF01F7707310054D889 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,9 +81,9 @@
 		40EE8CBE1F7707310054D889 = {
 			isa = PBXGroup;
 			children = (
-				40EE8CC91F7707310054D889 /* minimeARchive */,
-				40EE8CE21F7707310054D889 /* minimeARchiveTests */,
-				40EE8CED1F7707310054D889 /* minimeARchiveUITests */,
+				40EE8CC91F7707310054D889 /* miniARchive */,
+				40EE8CE21F7707310054D889 /* miniARchiveTests */,
+				40EE8CED1F7707310054D889 /* miniARchiveUITests */,
 				40EE8CC81F7707310054D889 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,14 +91,14 @@
 		40EE8CC81F7707310054D889 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				40EE8CC71F7707310054D889 /* minime ARchive.app */,
-				40EE8CDF1F7707310054D889 /* minime ARchiveTests.xctest */,
-				40EE8CEA1F7707310054D889 /* minime ARchiveUITests.xctest */,
+				40EE8CC71F7707310054D889 /* miniARchive.app */,
+				40EE8CDF1F7707310054D889 /* miniARchiveTests.xctest */,
+				40EE8CEA1F7707310054D889 /* miniARchiveUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		40EE8CC91F7707310054D889 /* minimeARchive */ = {
+		40EE8CC91F7707310054D889 /* miniARchive */ = {
 			isa = PBXGroup;
 			children = (
 				40EE8CCA1F7707310054D889 /* AppDelegate.swift */,
@@ -110,33 +110,33 @@
 				40EE8CD71F7707310054D889 /* LaunchScreen.storyboard */,
 				40EE8CDA1F7707310054D889 /* Info.plist */,
 			);
-			path = minimeARchive;
+			path = miniARchive;
 			sourceTree = "<group>";
 		};
-		40EE8CE21F7707310054D889 /* minimeARchiveTests */ = {
+		40EE8CE21F7707310054D889 /* miniARchiveTests */ = {
 			isa = PBXGroup;
 			children = (
-				40EE8CE31F7707310054D889 /* minime_ARchiveTests.swift */,
+				40EE8CE31F7707310054D889 /* miniARchiveTests.swift */,
 				40EE8CE51F7707310054D889 /* Info.plist */,
 			);
-			path = minimeARchiveTests;
+			path = miniARchiveTests;
 			sourceTree = "<group>";
 		};
-		40EE8CED1F7707310054D889 /* minimeARchiveUITests */ = {
+		40EE8CED1F7707310054D889 /* miniARchiveUITests */ = {
 			isa = PBXGroup;
 			children = (
-				40EE8CEE1F7707310054D889 /* minime_ARchiveUITests.swift */,
+				40EE8CEE1F7707310054D889 /* miniARchiveUITests.swift */,
 				40EE8CF01F7707310054D889 /* Info.plist */,
 			);
-			path = minimeARchiveUITests;
+			path = miniARchiveUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		40EE8CC61F7707310054D889 /* minime ARchive */ = {
+		40EE8CC61F7707310054D889 /* miniARchive */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 40EE8CF31F7707310054D889 /* Build configuration list for PBXNativeTarget "minime ARchive" */;
+			buildConfigurationList = 40EE8CF31F7707310054D889 /* Build configuration list for PBXNativeTarget "miniARchive" */;
 			buildPhases = (
 				40EE8CC31F7707310054D889 /* Sources */,
 				40EE8CC41F7707310054D889 /* Frameworks */,
@@ -146,14 +146,14 @@
 			);
 			dependencies = (
 			);
-			name = "minime ARchive";
-			productName = "minime ARchive";
-			productReference = 40EE8CC71F7707310054D889 /* minime ARchive.app */;
+			name = "miniARchive";
+			productName = "miniARchive";
+			productReference = 40EE8CC71F7707310054D889 /* miniARchive.app */;
 			productType = "com.apple.product-type.application";
 		};
-		40EE8CDE1F7707310054D889 /* minime ARchiveTests */ = {
+		40EE8CDE1F7707310054D889 /* miniARchiveTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 40EE8CF61F7707310054D889 /* Build configuration list for PBXNativeTarget "minime ARchiveTests" */;
+			buildConfigurationList = 40EE8CF61F7707310054D889 /* Build configuration list for PBXNativeTarget "miniARchiveTests" */;
 			buildPhases = (
 				40EE8CDB1F7707310054D889 /* Sources */,
 				40EE8CDC1F7707310054D889 /* Frameworks */,
@@ -164,14 +164,14 @@
 			dependencies = (
 				40EE8CE11F7707310054D889 /* PBXTargetDependency */,
 			);
-			name = "minime ARchiveTests";
-			productName = "minime ARchiveTests";
-			productReference = 40EE8CDF1F7707310054D889 /* minime ARchiveTests.xctest */;
+			name = "miniARchiveTests";
+			productName = "miniARchiveTests";
+			productReference = 40EE8CDF1F7707310054D889 /* miniARchiveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		40EE8CE91F7707310054D889 /* minime ARchiveUITests */ = {
+		40EE8CE91F7707310054D889 /* miniARchiveUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 40EE8CF91F7707310054D889 /* Build configuration list for PBXNativeTarget "minime ARchiveUITests" */;
+			buildConfigurationList = 40EE8CF91F7707310054D889 /* Build configuration list for PBXNativeTarget "miniARchiveUITests" */;
 			buildPhases = (
 				40EE8CE61F7707310054D889 /* Sources */,
 				40EE8CE71F7707310054D889 /* Frameworks */,
@@ -182,9 +182,9 @@
 			dependencies = (
 				40EE8CEC1F7707310054D889 /* PBXTargetDependency */,
 			);
-			name = "minime ARchiveUITests";
-			productName = "minime ARchiveUITests";
-			productReference = 40EE8CEA1F7707310054D889 /* minime ARchiveUITests.xctest */;
+			name = "miniARchiveUITests";
+			productName = "miniARchiveUITests";
+			productReference = 40EE8CEA1F7707310054D889 /* miniARchiveUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -213,7 +213,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 40EE8CC21F7707310054D889 /* Build configuration list for PBXProject "minimeARchive" */;
+			buildConfigurationList = 40EE8CC21F7707310054D889 /* Build configuration list for PBXProject "miniARchive" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -226,9 +226,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				40EE8CC61F7707310054D889 /* minime ARchive */,
-				40EE8CDE1F7707310054D889 /* minime ARchiveTests */,
-				40EE8CE91F7707310054D889 /* minime ARchiveUITests */,
+				40EE8CC61F7707310054D889 /* miniARchive */,
+				40EE8CDE1F7707310054D889 /* miniARchiveTests */,
+				40EE8CE91F7707310054D889 /* miniARchiveUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -276,7 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40EE8CE41F7707310054D889 /* minime_ARchiveTests.swift in Sources */,
+				40EE8CE41F7707310054D889 /* miniARchiveTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,7 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40EE8CEF1F7707310054D889 /* minime_ARchiveUITests.swift in Sources */,
+				40EE8CEF1F7707310054D889 /* miniARchiveUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,12 +293,12 @@
 /* Begin PBXTargetDependency section */
 		40EE8CE11F7707310054D889 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40EE8CC61F7707310054D889 /* minime ARchive */;
+			target = 40EE8CC61F7707310054D889 /* miniARchive */;
 			targetProxy = 40EE8CE01F7707310054D889 /* PBXContainerItemProxy */;
 		};
 		40EE8CEC1F7707310054D889 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 40EE8CC61F7707310054D889 /* minime ARchive */;
+			target = 40EE8CC61F7707310054D889 /* miniARchive */;
 			targetProxy = 40EE8CEB1F7707310054D889 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -435,9 +435,9 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5F2AE5X2J9;
-				INFOPLIST_FILE = "minime ARchive/Info.plist";
+				INFOPLIST_FILE = "miniARchive/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "archive.minime-ARchive";
+				PRODUCT_BUNDLE_IDENTIFIER = "archive.miniARchive";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -449,9 +449,9 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5F2AE5X2J9;
-				INFOPLIST_FILE = "minime ARchive/Info.plist";
+				INFOPLIST_FILE = "miniARchive/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "archive.minime-ARchive";
+				PRODUCT_BUNDLE_IDENTIFIER = "archive.miniARchive";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -465,13 +465,13 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5F2AE5X2J9;
-				INFOPLIST_FILE = "minime ARchiveTests/Info.plist";
+				INFOPLIST_FILE = "miniARchiveTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "archive.minime-ARchiveTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "archive.miniARchiveTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/minime ARchive.app/minime ARchive";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/miniARchive.app/miniARchive";
 			};
 			name = Debug;
 		};
@@ -482,13 +482,13 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5F2AE5X2J9;
-				INFOPLIST_FILE = "minime ARchiveTests/Info.plist";
+				INFOPLIST_FILE = "miniARchiveTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "archive.minime-ARchiveTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "archive.miniARchiveTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/minime ARchive.app/minime ARchive";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/miniARchive.app/miniARchive";
 			};
 			name = Release;
 		};
@@ -498,13 +498,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5F2AE5X2J9;
-				INFOPLIST_FILE = "minime ARchiveUITests/Info.plist";
+				INFOPLIST_FILE = "miniARchiveUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "archive.minime-ARchiveUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "archive.miniARchiveUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "minime ARchive";
+				TEST_TARGET_NAME = "miniARchive";
 			};
 			name = Debug;
 		};
@@ -514,20 +514,20 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5F2AE5X2J9;
-				INFOPLIST_FILE = "minime ARchiveUITests/Info.plist";
+				INFOPLIST_FILE = "miniARchiveUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "archive.minime-ARchiveUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "archive.miniARchiveUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "minime ARchive";
+				TEST_TARGET_NAME = "miniARchive";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		40EE8CC21F7707310054D889 /* Build configuration list for PBXProject "minimeARchive" */ = {
+		40EE8CC21F7707310054D889 /* Build configuration list for PBXProject "miniARchive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				40EE8CF11F7707310054D889 /* Debug */,
@@ -536,7 +536,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		40EE8CF31F7707310054D889 /* Build configuration list for PBXNativeTarget "minime ARchive" */ = {
+		40EE8CF31F7707310054D889 /* Build configuration list for PBXNativeTarget "miniARchive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				40EE8CF41F7707310054D889 /* Debug */,
@@ -545,7 +545,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		40EE8CF61F7707310054D889 /* Build configuration list for PBXNativeTarget "minime ARchiveTests" */ = {
+		40EE8CF61F7707310054D889 /* Build configuration list for PBXNativeTarget "miniARchiveTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				40EE8CF71F7707310054D889 /* Debug */,
@@ -554,7 +554,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		40EE8CF91F7707310054D889 /* Build configuration list for PBXNativeTarget "minime ARchiveUITests" */ = {
+		40EE8CF91F7707310054D889 /* Build configuration list for PBXNativeTarget "miniARchiveUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				40EE8CFA1F7707310054D889 /* Debug */,

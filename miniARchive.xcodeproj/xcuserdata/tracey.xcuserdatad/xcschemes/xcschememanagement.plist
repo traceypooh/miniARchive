@@ -4,10 +4,28 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>minime ARchive.xcscheme</key>
+		<key>miniARchive.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>40EE8CC61F7707310054D889</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>40EE8CDE1F7707310054D889</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>40EE8CE91F7707310054D889</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  minime ARchive
+//  miniARchive
 //
 //  Created by tracey on 9/23/17.
 //  Copyright © 2017 tracey. All rights reserved.

@@ -1,6 +1,6 @@
 //
-//  minime_ARchiveUITests.swift
-//  minime ARchiveUITests
+//  miniARchiveUITests.swift
+//  miniARchiveUITests
 //
 //  Created by tracey on 9/23/17.
 //  Copyright © 2017 tracey. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class minime_ARchiveUITests: XCTestCase {
+class miniARchiveUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()
