@@ -12,7 +12,7 @@ Augmented Reality app to recognize "mini me" statues inside Internet Archive HQ 
 
 ## Just now "tapped" my (actual) photo and it identified me from the lineup!
 
-_ [the interesting code is here](blob/master/miniARchive/Scene.swift) _
+_ [the interesting code is here](miniARchive/Scene.swift) _
 
 # Created app via
 - began with SpriteKit (xCode 9)
