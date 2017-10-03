@@ -12,7 +12,7 @@ import UIKit
 import CoreImage
 
 import CocoaImageHashing
-//import WTF
+//import PHASH
 
 // returns UIIimage from current ARFrame
 extension UIView {
@@ -270,9 +270,6 @@ class Scene: SKScene {
     func xxx(cam: UIImage) -> String {
         let size = CGSize(width: compareWidth, height: compareHeight)
 
-        //mainly(3, ["js.ppm", "bk.ppm"])
-        //String.fromCString(mainly(3, ["js.ppm", "bk.ppm"]))
-
 
         
         for TESTIMG in ["BrewsterKahle","BrewsterKahle2","BrewsterKahle-xxx","BrewsterKahle-xxx2","jason-xxx"] { //xxx
@@ -450,7 +447,10 @@ class Scene: SKScene {
             anchor.accessibilityLabel = results // a little hackety-hack to pass to anchor display
             sceneView.session.add(anchor: anchor)
 
-            
+
+            let xxx = PHASH()
+            xxx.mainly("BrewsterKahle-xxx.ppm", "BrewsterKahle-xxx2-raw.ppm")
+
 
             
             if (false) {
