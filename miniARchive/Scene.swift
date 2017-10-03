@@ -252,14 +252,18 @@ class Scene: SKScene {
         }
         
         var best = ""
+        var tops = ""
         for (k, v) in (Array(scores).sorted {$0.1 < $1.1}) {
             if (best == "") {
                 best = k
             }
+            if (tops.count < 100) {
+                tops = tops + k + "\n"
+            }
             print("\(k):\(v)")
         }
         
-        return best
+        return tops //best xxx
     }
     
     
@@ -407,11 +411,13 @@ class Scene: SKScene {
     
     override func didMove(to view: SKView) {
         // Setup your scene here
+        showPersonGuide()
     }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let sceneView = self.view as? ARSKView else {
@@ -422,10 +428,18 @@ class Scene: SKScene {
         if let currentFrame = sceneView.session.currentFrame {
             var results = "Statue"
 
+            
             let myImage:UIImage = sceneView.snapshot! // SEE CUSTOM THING TOP OF FILE!
             //myImage = UIImage(named: "glogo")!
-            results = match(cam: myImage, fname:"camera")
+            let masked:UIImage = maskImage(image: myImage)
+            let matchee:UIImage = blackenAndCrop(img: masked)
+            showImage(img: matchee)
+            results = match(cam: matchee, fname:"camera")
 
+            //showImage(img: UIImage(named: "BrewsterKahle")!)
+
+
+            
             // Create a transform with a translation of 0.75 meter in front of the camera
             var translation = matrix_identity_float4x4
             translation.columns.3.z = -0.75
@@ -434,12 +448,13 @@ class Scene: SKScene {
             // Add a new anchor to the session
             let anchor = ARAnchor(transform: transform)
             anchor.accessibilityLabel = results // a little hackety-hack to pass to anchor display
-            print("DA PHUQUE? \(results)")
+            sceneView.session.add(anchor: anchor)
+
             
 
             
             if (false) {
-            let imageData:NSData = UIImagePNGRepresentation(myImage)! as NSData
+            let imageData:NSData = UIImagePNGRepresentation(masked)! as NSData
             var imgstr:String = imageData.base64EncodedString()
             // This took me some hours to figure out -- PNGs kept coming up corrupt/blank
             // on backend -- but proper dimensions.  Wasnt sure if was user privacy
@@ -482,5 +497,72 @@ class Scene: SKScene {
             task.resume() // send request
             }
         }
+    }
+    
+    func blackenAndCrop(img:UIImage) -> UIImage {
+        var backgroundImage = UIImage(named: "black.png")
+        backgroundImage = backgroundImage?.scaled(to: CGSize(width:(img.cgImage?.width)!, height:(img.cgImage?.height)!))
+    
+        UIGraphicsBeginImageContextWithOptions((backgroundImage?.size)!, false, 0.0)
+        backgroundImage?.draw(in: CGRect(x:0.0, y:0.0, width:backgroundImage!.size.width, height:backgroundImage!.size.height))
+        img.draw(in: CGRect(x:backgroundImage!.size.width - img.size.width, y:backgroundImage!.size.height - img.size.height, width:img.size.width, height:img.size.height))
+        let result:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        // now crop off: 13% left, 13% right, 9.5% top
+        let w = float_t((result.cgImage?.width)!)
+        let h = float_t((result.cgImage?.height)!)
+        let top = ceil(0.095 * h)
+        let rect:CGRect = CGRect(x:Int(ceil(0.13 * w)), y:Int(ceil(top)), width:Int(ceil(0.74 * w)), height:Int(floor(h - top)))
+        let cropRef = result.cgImage?.cropping(to: rect)
+        return UIImage(cgImage: cropRef!)
+    }
+    
+    func showPersonGuide() {
+        let background = SKSpriteNode(imageNamed: "mask-ants")
+        background.position = CGPoint(x: 0, y: 0) // frame.size.height - 200) // frame.size.width / 2, y: frame.size.height / 2)
+        background.size = CGSize(width:frame.size.width, height:frame.size.height - 100)
+        background.alpha = 0.3
+        
+        addChild(background)
+    }
+    
+    func showImage(img:UIImage) {
+        let texture = SKTexture(image: img)
+        let background = SKSpriteNode(texture: texture)
+        background.position = CGPoint(x: 0, y: 0) // frame.size.height - 200) // frame.size.width / 2, y: frame.size.height / 2)
+        background.size = CGSize(width:frame.size.width, height:frame.size.height - 100)
+        //background.alpha = 0.9
+
+        addChild(background)
+        
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { timer in
+            self.removeChildren(in: [background])
+        }
+    }
+    
+    // https://stackoverflow.com/questions/5757386/how-to-mask-an-uiimageview
+    func maskImage(image: UIImage) -> UIImage {
+        var maskImage = UIImage(named: "hack") //mask-black2 -- but "24-bit PNG w/o alpha channel -- wtfever
+        
+        //maskImage = maskImage?.scaled(to: CGSize(width: (image.cgImage?.width)!, height: (image.cgImage?.height)!)) //xxx
+
+        let maskRef:CGImage = (maskImage?.cgImage)!
+        
+        let mask = CGImage(
+            maskWidth: maskRef.width,
+            height: maskRef.height,
+            bitsPerComponent: maskRef.bitsPerComponent,
+            bitsPerPixel: maskRef.bitsPerPixel,
+            bytesPerRow: maskRef.bytesPerRow,
+            provider: maskRef.dataProvider!,
+            decode: nil,
+            shouldInterpolate: false)
+        
+        let masked = image.cgImage!.masking(mask!)
+        let maskedImage = UIImage(cgImage: masked!)
+        
+        print("MASKED! \(image.cgImage?.width ?? -666)) x \(image.cgImage?.height ?? -666)")
+        return maskedImage
     }
 }
