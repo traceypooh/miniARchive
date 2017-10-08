@@ -258,10 +258,10 @@ class Scene: SKScene {
     
     
     func showPersonGuide() {
-        let background = SKSpriteNode(imageNamed: "mask-ants2")
+        let background = SKSpriteNode(imageNamed: "maska")
         background.position = CGPoint(x: 0, y: 0) // frame.size.height - 200) // frame.size.width / 2, y: frame.size.height / 2)
         background.size = CGSize(width:frame.size.width, height:frame.size.height)// - 100) //xxx
-        background.alpha = 0.2
+        background.alpha = 0.4
         
         addChild(background)
     }
