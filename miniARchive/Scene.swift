@@ -12,86 +12,11 @@ import UIKit
 import CoreImage
 
 import CocoaImageHashing
-//import PHASH
-
-// returns UIIimage from current ARFrame
-extension UIView {
-    var snapshot: UIImage? {
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
-        defer { UIGraphicsEndImageContext() }
-        // NOTE: changed from true
-        drawHierarchy(in: bounds, afterScreenUpdates: false)
-        return UIGraphicsGetImageFromCurrentImageContext()
-    }
-}
-
-// Image Scaling
-extension UIImage {
-    /// Represents a scaling mode
-    enum ScalingMode {
-        case aspectFill
-        case aspectFit
-        
-        /// Calculates the aspect ratio between two sizes
-        ///
-        /// - parameters:
-        ///     - size:      the first size used to calculate the ratio
-        ///     - otherSize: the second size used to calculate the ratio
-        ///
-        /// - return: the aspect ratio between the two sizes
-        func aspectRatio(between size: CGSize, and otherSize: CGSize) -> CGFloat {
-            let aspectWidth  = size.width/otherSize.width
-            let aspectHeight = size.height/otherSize.height
-            
-            switch self {
-            case .aspectFill:
-                return max(aspectWidth, aspectHeight)
-            case .aspectFit:
-                return min(aspectWidth, aspectHeight)
-            }
-        }
-    }
-    
-    /// Scales an image to fit within a bounds with a size governed by the passed size. Also keeps the aspect ratio.
-    ///
-    /// - parameter:
-    ///     - newSize:     the size of the bounds the image must fit within.
-    ///     - scalingMode: the desired scaling mode
-    ///
-    /// - returns: a new scaled image.
-    func scaled(to newSize: CGSize, scalingMode: UIImage.ScalingMode = .aspectFill) -> UIImage {
-        if (size.width == newSize.width  &&  size.height == newSize.height) {
-            print("RETURN ASIS")
-            return self
-        }
-
-        let aspectRatio = scalingMode.aspectRatio(between: newSize, and: size)
-        
-        /* Build the rectangle representing the area to be drawn */
-        var scaledImageRect = CGRect.zero
-        
-        scaledImageRect.size.width  = size.width * aspectRatio
-        scaledImageRect.size.height = size.height * aspectRatio
-        scaledImageRect.origin.x    = (newSize.width - size.width * aspectRatio) / 2.0
-        scaledImageRect.origin.y    = (newSize.height - size.height * aspectRatio) / 2.0
-        
-        /* Draw and retrieve the scaled image */
-        UIGraphicsBeginImageContext(newSize)
-        
-        draw(in: scaledImageRect)
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        return scaledImage!
-    }
-}
-
-
 
 class Scene: SKScene {
-    var compareWidth:Int = 189
-    var compareHeight:Int = 252
+    let matchingEndpoint = "https://archive.org/services/miniARchive.php"
+    let compareWidth:Int  = 1120 / 4 // 280
+    let compareHeight:Int = 1824 / 4 // 456
     // ls|perl -pe 's/\.png$//'|quotem|tr "'" '"' ..
     let phashes: [String: OSHashDistanceType] = [
         "AaronBinns": -7008665226162146816,
@@ -219,22 +144,182 @@ class Scene: SKScene {
         "VinayGoel": 7277463737655286272,
     ]
     
-     
-    // returns passed in image as grayscale
-    // https://stackoverflow.com/questions/40178846/convert-uiimage-to-grayscale-keeping-image-quality
-    func Noir(orig: UIImage) -> UIImage {
-        let context = CIContext(options: nil)
-        let currentFilter = CIFilter(name: "CIPhotoEffectNoir")
-        currentFilter!.setValue(CIImage(image: orig), forKey: kCIInputImageKey)
-        let output = currentFilter!.outputImage
-        let cgimg = context.createCGImage(output!,from: output!.extent)
-        let processedImage = UIImage(cgImage: cgimg!)
-        return processedImage
+ 
+    
+    override func didMove(to view: SKView) {
+        // Setup your scene here
+        showPersonGuide()
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        // Called before each frame is rendered
     }
     
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let sceneView = self.view as? ARSKView else {
+            return
+        }
+        
+        // Create anchor using the camera's current position
+        if let currentFrame = sceneView.session.currentFrame {
+            let myImage:UIImage = sceneView.snapshot! // SEE CUSTOM THING TOP OF FILE!
+            let masked:UIImage = maskImage(image: myImage)
+            //showImage(img: masked)
+            let matchee:UIImage = blackenAndCrop(img: masked)
+            showImage(img: matchee)
+            //let results = matchPHASH(cam: matchee, fname:"camera")
+            //showName(sceneView:sceneView, currentFrame:currentFrame, name:results)
+            
+            matchRemote(sceneView:sceneView, currentFrame:currentFrame, cam: matchee)
+        }
+    }
+    
+    
+    func matchRemote(sceneView:ARSKView, currentFrame:ARFrame, cam:UIImage) {
+        var results = "Statue"
 
-    func match(cam: UIImage, fname:String) -> String {
+        let imageData:NSData = UIImagePNGRepresentation(cam)! as NSData
+        var imgstr:String = imageData.base64EncodedString()
+        // This took me some hours to figure out -- PNGs kept coming up corrupt/blank
+        // on backend -- but proper dimensions.  Wasnt sure if was user privacy
+        // builtin or using APIs wrong -- but ended up the `+` chars were being
+        // interpreted as `SPACE` chars on back -- fixed!
+        imgstr = imgstr.replacingOccurrences(of:"+", with:"%2B")
+        //print(imgstr)
+        
+        
+        // submit screenshot to back-end service where we can more easily compare
+        // it against known pictures of statues and report back the best matched name
+        let url = NSURL(string: matchingEndpoint)
+        let request = NSMutableURLRequest(url: url! as URL)
+        request.httpMethod = "POST"
+        request.httpBody = ("img=" + imgstr).data(using: String.Encoding.ascii)
+        let len = imgstr.lengthOfBytes(using: String.Encoding.utf8)
+        print("post screenshot number of bytes: \(len)")
+        
+        let urlsession = URLSession.shared
+        let task = urlsession.dataTask(with:request as URLRequest, completionHandler: { (data, response, error) in
+            // make sure we got data
+            guard let responseData = data else {
+                print("Error: did not receive data")
+                return
+            }
+            results = NSString(data:responseData, encoding:String.Encoding.utf8.rawValue)! as String
+            print("API Response: \(results)")
+            
+            self.showName(sceneView:sceneView, currentFrame:currentFrame, name:results)
+        })
+        task.resume() // send request
+    }
+
+    func showName(sceneView:ARSKView, currentFrame:ARFrame, name:String) {
+            // Create a transform with a translation of 0.75 meter in front of the camera
+            var translation = matrix_identity_float4x4
+            translation.columns.3.z = -0.75
+            let transform = simd_mul(currentFrame.camera.transform, translation)
+            
+            // Add a new anchor to the session
+            let anchor = ARAnchor(transform: transform)
+            anchor.accessibilityLabel = name // a little hackety-hack to pass to anchor display
+            sceneView.session.add(anchor: anchor)
+    }
+    
+    
+    func blackenAndCrop(img:UIImage) -> UIImage {
+        // start with all black portrait aspect image
+        var backgroundImage = UIImage(named: "black.png")
+        // resize to passed in image w/h
+        backgroundImage = backgroundImage?.scaled(to: CGSize(width:(img.cgImage?.width)!, height:(img.cgImage?.height)!))
+
+        // add in the passed in image to overlay the black
+        UIGraphicsBeginImageContextWithOptions((backgroundImage?.size)!, false, 0.0)
+        backgroundImage?.draw(in: CGRect(x:0.0, y:0.0, width:backgroundImage!.size.width, height:backgroundImage!.size.height))
+        img.draw(in: CGRect(x:0, y:0, width:img.size.width, height:img.size.height))
+        let result:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        
+        // now crop off:
+        let CROPLR:float_t  = 0.13   //  13% left/right
+        let CROPTOP:float_t = 0.217  //  21.7% top
+        let CROPBOT:float_t = 0.138  //  13.8% top
+
+        let w = float_t((result.cgImage?.width)!)
+        let h = float_t((result.cgImage?.height)!)
+        let top = ceil(CROPTOP * h)
+        let rect:CGRect = CGRect(x:Int(ceil(CROPLR * w)), y:Int(ceil(top)), width:Int(ceil((1 - (2*CROPLR)) * w)), height:Int(floor(h - top - (CROPBOT * h))))
+        let cropRef = result.cgImage?.cropping(to: rect) //xxx
+        let cropped:UIImage = UIImage(cgImage: cropRef!)
+        
+        let size = CGSize(width: compareWidth, height: compareHeight)
+        return cropped.scaled(to: size, scalingMode: UIImage.ScalingMode.aspectFill)
+    }
+    
+    
+    func showPersonGuide() {
+        let background = SKSpriteNode(imageNamed: "mask-ants2")
+        background.position = CGPoint(x: 0, y: 0) // frame.size.height - 200) // frame.size.width / 2, y: frame.size.height / 2)
+        background.size = CGSize(width:frame.size.width, height:frame.size.height)// - 100) //xxx
+        background.alpha = 0.2
+        
+        addChild(background)
+    }
+    
+    func showImage(img:UIImage) {
+        let texture = SKTexture(image: img)
+        let background = SKSpriteNode(texture: texture)
+        background.position = CGPoint(x: 0, y: 0) // frame.size.height - 200) // frame.size.width / 2, y: frame.size.height / 2)
+        background.size = CGSize(width:frame.size.width, height:frame.size.height - 100)
+        //background.alpha = 0.9
+        
+        addChild(background)
+        
+        Timer.scheduledTimer(withTimeInterval: 4, repeats: false) { timer in
+            self.removeChildren(in: [background])
+        }
+    }
+    
+    // https://stackoverflow.com/questions/5757386/how-to-mask-an-uiimageview
+    func maskImage(image: UIImage) -> UIImage {
+        var maskImage = UIImage(named: "hack3") //mask-black2 -- but "24-bit PNG w/o alpha channel" -- wtfever (and then slid down after "hack" wasnt quite right when masking on top of the capture.. then resized _again_ to fit into iphone6s fullsize image frame capture...
+        
+        print("RAW CAMERA: ", image.cgImage?.width, " x ", image.cgImage?.height)
+        
+        //maskImage = maskImage?.scaled(to: CGSize(width: (image.cgImage?.width)!, height: (image.cgImage?.height)!)) //xxx
+        
+        let maskRef:CGImage = (maskImage?.cgImage)!
+        
+        let mask = CGImage(
+            maskWidth: maskRef.width,
+            height: maskRef.height,
+            bitsPerComponent: maskRef.bitsPerComponent,
+            bitsPerPixel: maskRef.bitsPerPixel,
+            bytesPerRow: maskRef.bytesPerRow,
+            provider: maskRef.dataProvider!,
+            decode: nil,
+            shouldInterpolate: false)
+        
+        let masked = image.cgImage!.masking(mask!)
+        let maskedImage = UIImage(cgImage: masked!)
+        
+        // print("MASKED! \(image.cgImage?.width ?? -666)) x \(image.cgImage?.height ?? -666)")
+        return maskedImage
+    }
+
+    
+    
+    func makePHASH(cam: UIImage) {
+        let size = CGSize(width: compareWidth, height: compareHeight)
+        
+        for TESTIMG in ["BrewsterKahle","BrewsterKahle2","BrewsterKahle-xxx","BrewsterKahle-xxx2","jason-xxx"] {
+            print("=========== \(TESTIMG) =====================================================================")
+            matchPHASH(cam: UIImage(named: TESTIMG)!, fname:TESTIMG)
+        }
+    }
+    
+    
+    func matchPHASH(cam: UIImage, fname:String) -> String {
         let phasher:OSImageHashingProvider = OSImageHashingProviderFromImageHashingProviderId(OSImageHashingProviderId(rawValue: 4))
         let phash1:OSHashType = phasher.hashImage(cam)
         print("\"\(fname)\": \(phash1),") // JFC make ur sh*t unsigned!
@@ -266,54 +351,60 @@ class Scene: SKScene {
         return tops //best xxx
     }
     
-    
-    func xxx(cam: UIImage) -> String {
-        let size = CGSize(width: compareWidth, height: compareHeight)
-
-
+ 
+    func testPHASH() {
+        let t1 = UIImage(named: "TraceyJaquith")!.scaled(to: size)
+        let t2 = UIImage(named: "TraceyJaquith")!.scaled(to: size)
         
-        for TESTIMG in ["BrewsterKahle","BrewsterKahle2","BrewsterKahle-xxx","BrewsterKahle-xxx2","jason-xxx"] { //xxx
-            print("=========== \(TESTIMG) =====================================================================")
-            match(cam: UIImage(named: TESTIMG)!, fname:TESTIMG)
-        }
+        let b1 = UIImage(named: "BrewsterKahle")!.scaled(to: size)
+        let b2 = UIImage(named: "BrewsterKahle2")!.scaled(to: size)
+        
+        let phasher = OSImageHashingProviderFromImageHashingProviderId(OSImageHashingProviderId.pHash)
+        var phash1:OSHashType = phasher.hashImage(b1)
+        var phash2:OSHashType = phasher.hashImage(b2)
+        var dist:OSHashDistanceType = phasher.hashDistance(phash1, to: phash2)
+        print("b1 phash: \(String(phash1, radix: 16, uppercase: false))")
+        print("b2 phash: \(String(phash2, radix: 16, uppercase: false))")
+        print("dist: \(dist)")
+        
+        phash1 = phasher.hashImage(t1)
+        phash2 = phasher.hashImage(t2)
+        dist = phasher.hashDistance(phash1, to: phash2)
+        print("b1 phash: \(String(phash1, radix: 16, uppercase: false))")
+        print("b2 phash: \(String(phash2, radix: 16, uppercase: false))")
+        print("dist: \(dist)")
 
-
+    }
+    
+    func testDiffPixels() -> String {
         var t1 = UIImage(named: "TraceyJaquith")!.scaled(to: size)
         var t2 = UIImage(named: "TraceyJaquith")!.scaled(to: size)
         
         var b1 = UIImage(named: "BrewsterKahle")!.scaled(to: size)
         var b2 = UIImage(named: "BrewsterKahle2")!.scaled(to: size)
         
-        let phasher = OSImageHashingProviderFromImageHashingProviderId(OSImageHashingProviderId.pHash)
-        let phash1:OSHashType = phasher.hashImage(b1)
-        let phash2:OSHashType = phasher.hashImage(b2)
-        let dist:OSHashDistanceType = phasher.hashDistance(phash1, to: phash2)
-        print("b1 phash: \(String(phash1, radix: 16, uppercase: false))")
-        print("b2 phash: \(String(phash2, radix: 16, uppercase: false))")
-        print("dist: \(dist)")
-
         // METRICS:                  // MAE  / RMSE / MAET
-        chex(image1: t1, image2: t2) // 0    / 0    / 0
-        chex(image1: b1, image2: b2) // 46.8 / 69.0 / 46.4
-        chex(image1: t1, image2: b1) //_42.7_/_68.7_/_42.1_
-        chex(image1: t1, image2: b2) // 60.4 / 86.1 / 60.1
+        diffPixels(image1: t1, image2: t2) // 0    / 0    / 0
+        diffPixels(image1: b1, image2: b2) // 46.8 / 69.0 / 46.4
+        diffPixels(image1: t1, image2: b1) //_42.7_/_68.7_/_42.1_
+        diffPixels(image1: t1, image2: b2) // 60.4 / 86.1 / 60.1
         print("\n\n============================\n\n")
-        t1 = Noir(orig: t1)
-        b1 = Noir(orig: b1)
-        b2 = Noir(orig: b2)
-        chex(image1: t1, image2: t2) // 65.7 / 90.3  / 65.2
-        t2 = Noir(orig: t2)
+        t1 = t1.noir()
+        b1 = b1.noir()
+        b2 = b2.noir()
+        diffPixels(image1: t1, image2: t2) // 65.7 / 90.3  / 65.2
+        t2 = t2.noir()
         // METRICS:                  // MAE  / RMSE / MAET
-        chex(image1: t1, image2: t2) // 0    / 0     / 0
-        chex(image1: b1, image2: b2) //_50.3_/ 76.30 /_50.0_
-        chex(image1: t1, image2: b1) // 50.5 /_76.28_/ 50.2
-        chex(image1: t1, image2: b2) // 62.6 / 87.9  / 62.3
+        diffPixels(image1: t1, image2: t2) // 0    / 0     / 0
+        diffPixels(image1: b1, image2: b2) //_50.3_/ 76.30 /_50.0_
+        diffPixels(image1: t1, image2: b1) // 50.5 /_76.28_/ 50.2
+        diffPixels(image1: t1, image2: b2) // 62.6 / 87.9  / 62.3
         
         return "Statue"
     }
     
     
-    func chex(image1: UIImage, image2: UIImage) {
+    func diffPixels(image1: UIImage, image2: UIImage) {
         if (!image1.size.equalTo(image2.size)) {
             print("DIFF SIZES!")
             return
@@ -404,165 +495,98 @@ class Scene: SKScene {
         print("--> MAET: \(MAET / totalCompares)")
         print("--> they are \(numDifferences / totalCompares * 100.0)% different\n")
     }
+}
 
-    
-    override func didMove(to view: SKView) {
-        // Setup your scene here
-        showPersonGuide()
+
+
+
+
+
+// returns UIIimage from current ARFrame
+extension UIView {
+    var snapshot: UIImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
+        defer { UIGraphicsEndImageContext() }
+        // NOTE: changed from true
+        drawHierarchy(in: bounds, afterScreenUpdates: false)
+        return UIGraphicsGetImageFromCurrentImageContext()
     }
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
-    
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let sceneView = self.view as? ARSKView else {
-            return
-        }
+}
+
+
+// Image Scaling
+extension UIImage {
+    /// Represents a scaling mode
+    enum ScalingMode {
+        case aspectFill
+        case aspectFit
         
-        // Create anchor using the camera's current position
-        if let currentFrame = sceneView.session.currentFrame {
-            var results = "Statue"
-
+        /// Calculates the aspect ratio between two sizes
+        ///
+        /// - parameters:
+        ///     - size:      the first size used to calculate the ratio
+        ///     - otherSize: the second size used to calculate the ratio
+        ///
+        /// - return: the aspect ratio between the two sizes
+        func aspectRatio(between size: CGSize, and otherSize: CGSize) -> CGFloat {
+            let aspectWidth  = size.width/otherSize.width
+            let aspectHeight = size.height/otherSize.height
             
-            let myImage:UIImage = sceneView.snapshot! // SEE CUSTOM THING TOP OF FILE!
-            //myImage = UIImage(named: "glogo")!
-            let masked:UIImage = maskImage(image: myImage)
-            let matchee:UIImage = blackenAndCrop(img: masked)
-            showImage(img: matchee)
-            results = match(cam: matchee, fname:"camera")
-
-            //showImage(img: UIImage(named: "BrewsterKahle")!)
-
-
-            
-            // Create a transform with a translation of 0.75 meter in front of the camera
-            var translation = matrix_identity_float4x4
-            translation.columns.3.z = -0.75
-            let transform = simd_mul(currentFrame.camera.transform, translation)
-            
-            // Add a new anchor to the session
-            let anchor = ARAnchor(transform: transform)
-            anchor.accessibilityLabel = results // a little hackety-hack to pass to anchor display
-            sceneView.session.add(anchor: anchor)
-
-
-            let xxx = PHASH()
-            xxx.mainly("BrewsterKahle-xxx.ppm", "BrewsterKahle-xxx2-raw.ppm")
-
-
-            
-            if (false) {
-            let imageData:NSData = UIImagePNGRepresentation(masked)! as NSData
-            var imgstr:String = imageData.base64EncodedString()
-            // This took me some hours to figure out -- PNGs kept coming up corrupt/blank
-            // on backend -- but proper dimensions.  Wasnt sure if was user privacy
-            // builtin or using APIs wrong -- but ended up the `+` chars were being
-            // interpreted as `SPACE` chars on back -- fixed!
-            imgstr = imgstr.replacingOccurrences(of:"+", with:"%2B")
-            //print(imgstr)
-            
-            
-            // submit screenshot to back-end service where we can more easily compare
-            // it against known pictures of statues and report back the best matched name
-            let url = NSURL(string: "https://www-tracey.archive.org/services/ARchive.php")
-            let request = NSMutableURLRequest(url: url! as URL)
-            request.httpMethod = "POST"
-            request.httpBody = ("img=" + imgstr).data(using: String.Encoding.ascii)
-            let len = imgstr.lengthOfBytes(using: String.Encoding.utf8)
-            print("post screenshot number of bytes: \(len)")
-            
-            let urlsession = URLSession.shared
-            let task = urlsession.dataTask(with:request as URLRequest, completionHandler: { (data, response, error) in
-                // make sure we got data
-                guard let responseData = data else {
-                    print("Error: did not receive data")
-                        return
-                }
-                results = NSString(data:responseData, encoding:String.Encoding.utf8.rawValue)! as String
-                print("API Response: \(results)")
-
-                
-                // Create a transform with a translation of 0.75 meter in front of the camera
-                var translation = matrix_identity_float4x4
-                translation.columns.3.z = -0.75
-                let transform = simd_mul(currentFrame.camera.transform, translation)
-                
-                // Add a new anchor to the session
-                let anchor = ARAnchor(transform: transform)
-                anchor.accessibilityLabel = results // a little hackety-hack to pass to anchor display
-                sceneView.session.add(anchor: anchor)
-            })
-            task.resume() // send request
+            switch self {
+            case .aspectFill:
+                return max(aspectWidth, aspectHeight)
+            case .aspectFit:
+                return min(aspectWidth, aspectHeight)
             }
         }
     }
     
-    func blackenAndCrop(img:UIImage) -> UIImage {
-        var backgroundImage = UIImage(named: "black.png")
-        backgroundImage = backgroundImage?.scaled(to: CGSize(width:(img.cgImage?.width)!, height:(img.cgImage?.height)!))
-    
-        UIGraphicsBeginImageContextWithOptions((backgroundImage?.size)!, false, 0.0)
-        backgroundImage?.draw(in: CGRect(x:0.0, y:0.0, width:backgroundImage!.size.width, height:backgroundImage!.size.height))
-        img.draw(in: CGRect(x:backgroundImage!.size.width - img.size.width, y:backgroundImage!.size.height - img.size.height, width:img.size.width, height:img.size.height))
-        let result:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+    /// Scales an image to fit within a bounds with a size governed by the passed size. Also keeps the aspect ratio.
+    ///
+    /// - parameter:
+    ///     - newSize:     the size of the bounds the image must fit within.
+    ///     - scalingMode: the desired scaling mode
+    ///
+    /// - returns: a new scaled image.
+    func scaled(to newSize: CGSize, scalingMode: UIImage.ScalingMode = .aspectFill) -> UIImage {
+        if (size.width == newSize.width  &&  size.height == newSize.height) {
+            print("RETURN ASIS")
+            return self
+        }
+        
+        let aspectRatio = scalingMode.aspectRatio(between: newSize, and: size)
+        
+        /* Build the rectangle representing the area to be drawn */
+        var scaledImageRect = CGRect.zero
+        
+        scaledImageRect.size.width  = size.width * aspectRatio
+        scaledImageRect.size.height = size.height * aspectRatio
+        scaledImageRect.origin.x    = (newSize.width - size.width * aspectRatio) / 2.0
+        scaledImageRect.origin.y    = (newSize.height - size.height * aspectRatio) / 2.0
+        
+        /* Draw and retrieve the scaled image */
+        UIGraphicsBeginImageContext(newSize)
+        
+        draw(in: scaledImageRect)
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        
         UIGraphicsEndImageContext()
         
-        // now crop off: 13% left, 13% right, 9.5% top
-        let w = float_t((result.cgImage?.width)!)
-        let h = float_t((result.cgImage?.height)!)
-        let top = ceil(0.095 * h)
-        let rect:CGRect = CGRect(x:Int(ceil(0.13 * w)), y:Int(ceil(top)), width:Int(ceil(0.74 * w)), height:Int(floor(h - top)))
-        let cropRef = result.cgImage?.cropping(to: rect)
-        return UIImage(cgImage: cropRef!)
+        return scaledImage!
     }
     
-    func showPersonGuide() {
-        let background = SKSpriteNode(imageNamed: "mask-ants")
-        background.position = CGPoint(x: 0, y: 0) // frame.size.height - 200) // frame.size.width / 2, y: frame.size.height / 2)
-        background.size = CGSize(width:frame.size.width, height:frame.size.height - 100)
-        background.alpha = 0.3
-        
-        addChild(background)
-    }
     
-    func showImage(img:UIImage) {
-        let texture = SKTexture(image: img)
-        let background = SKSpriteNode(texture: texture)
-        background.position = CGPoint(x: 0, y: 0) // frame.size.height - 200) // frame.size.width / 2, y: frame.size.height / 2)
-        background.size = CGSize(width:frame.size.width, height:frame.size.height - 100)
-        //background.alpha = 0.9
-
-        addChild(background)
-        
-        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { timer in
-            self.removeChildren(in: [background])
-        }
-    }
-    
-    // https://stackoverflow.com/questions/5757386/how-to-mask-an-uiimageview
-    func maskImage(image: UIImage) -> UIImage {
-        var maskImage = UIImage(named: "hack") //mask-black2 -- but "24-bit PNG w/o alpha channel -- wtfever
-        
-        //maskImage = maskImage?.scaled(to: CGSize(width: (image.cgImage?.width)!, height: (image.cgImage?.height)!)) //xxx
-
-        let maskRef:CGImage = (maskImage?.cgImage)!
-        
-        let mask = CGImage(
-            maskWidth: maskRef.width,
-            height: maskRef.height,
-            bitsPerComponent: maskRef.bitsPerComponent,
-            bitsPerPixel: maskRef.bitsPerPixel,
-            bytesPerRow: maskRef.bytesPerRow,
-            provider: maskRef.dataProvider!,
-            decode: nil,
-            shouldInterpolate: false)
-        
-        let masked = image.cgImage!.masking(mask!)
-        let maskedImage = UIImage(cgImage: masked!)
-        
-        print("MASKED! \(image.cgImage?.width ?? -666)) x \(image.cgImage?.height ?? -666)")
-        return maskedImage
+    // returns passed in image as grayscale
+    // https://stackoverflow.com/questions/40178846/convert-uiimage-to-grayscale-keeping-image-quality
+    func noir() -> UIImage {
+        let orig = self
+        let context = CIContext(options: nil)
+        let currentFilter = CIFilter(name: "CIPhotoEffectNoir")
+        currentFilter!.setValue(CIImage(image: orig), forKey: kCIInputImageKey)
+        let output = currentFilter!.outputImage
+        let cgimg = context.createCGImage(output!,from: output!.extent)
+        let processedImage = UIImage(cgImage: cgimg!)
+        return processedImage
     }
 }
+
