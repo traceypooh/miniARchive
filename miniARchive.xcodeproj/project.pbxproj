@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		40153DFC1F83EAC40081A607 /* phash.m in Sources */ = {isa = PBXBuildFile; fileRef = 40153DF81F83EAC30081A607 /* phash.m */; };
-		40153DFD1F83EAC40081A607 /* phash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40153DFB1F83EAC30081A607 /* phash.cpp */; };
 		407BBA171F82A35F00C097C6 /* CocoaImageHashing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 407BBA161F82A35F00C097C6 /* CocoaImageHashing.framework */; };
 		407BBA181F82A35F00C097C6 /* CocoaImageHashing.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 407BBA161F82A35F00C097C6 /* CocoaImageHashing.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		40EE8CCB1F7707310054D889 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE8CCA1F7707310054D889 /* AppDelegate.swift */; };
@@ -54,11 +52,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		40153DF11F83E45F0081A607 /* miniARchive-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "miniARchive-Bridging-Header.h"; sourceTree = "<group>"; };
-		40153DF81F83EAC30081A607 /* phash.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = phash.m; sourceTree = "<group>"; };
-		40153DF91F83EAC30081A607 /* phash.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = phash.hpp; sourceTree = "<group>"; };
-		40153DFA1F83EAC30081A607 /* phash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = phash.h; sourceTree = "<group>"; };
-		40153DFB1F83EAC30081A607 /* phash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = phash.cpp; sourceTree = "<group>"; };
+		4073DE511F853C0E0064E566 /* phash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = phash.cpp; path = miniARchive/PHASH/phash.cpp; sourceTree = "<group>"; };
+		4073DE531F853C220064E566 /* phash.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = phash.m; path = miniARchive/PHASH/phash.m; sourceTree = "<group>"; };
 		407BBA161F82A35F00C097C6 /* CocoaImageHashing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaImageHashing.framework; path = Carthage/Build/iOS/CocoaImageHashing.framework; sourceTree = "<group>"; };
 		40EE8CC71F7707310054D889 /* miniARchive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miniARchive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40EE8CCA1F7707310054D889 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +98,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4073DE4F1F853BEE0064E566 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4073DE531F853C220064E566 /* phash.m */,
+				4073DE511F853C0E0064E566 /* phash.cpp */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		40EE8CBE1F7707310054D889 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +115,7 @@
 				40EE8CE21F7707310054D889 /* miniARchiveTests */,
 				40EE8CED1F7707310054D889 /* miniARchiveUITests */,
 				40EE8CC81F7707310054D889 /* Products */,
+				4073DE4F1F853BEE0064E566 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -132,14 +137,9 @@
 				40EE8CCE1F7707310054D889 /* Scene.swift */,
 				40EE8CD01F7707310054D889 /* ViewController.swift */,
 				40EE8CD21F7707310054D889 /* Main.storyboard */,
-				40153DFB1F83EAC30081A607 /* phash.cpp */,
-				40153DFA1F83EAC30081A607 /* phash.h */,
-				40153DF91F83EAC30081A607 /* phash.hpp */,
-				40153DF81F83EAC30081A607 /* phash.m */,
 				40EE8CD51F7707310054D889 /* Assets.xcassets */,
 				40EE8CD71F7707310054D889 /* LaunchScreen.storyboard */,
 				40EE8CDA1F7707310054D889 /* Info.plist */,
-				40153DF11F83E45F0081A607 /* miniARchive-Bridging-Header.h */,
 			);
 			path = miniARchive;
 			sourceTree = "<group>";
@@ -301,9 +301,7 @@
 			files = (
 				40EE8CD11F7707310054D889 /* ViewController.swift in Sources */,
 				40EE8CCF1F7707310054D889 /* Scene.swift in Sources */,
-				40153DFC1F83EAC40081A607 /* phash.m in Sources */,
 				40EE8CCB1F7707310054D889 /* AppDelegate.swift in Sources */,
-				40153DFD1F83EAC40081A607 /* phash.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,16 +469,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5F2AE5X2J9;
+				DEVELOPMENT_TEAM = ZSFX78H3ZT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = miniARchive/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = archive.miniARchive;
+				PRODUCT_BUNDLE_IDENTIFIER = miniARchive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "miniARchive/miniARchive-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -493,16 +491,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5F2AE5X2J9;
+				DEVELOPMENT_TEAM = ZSFX78H3ZT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = miniARchive/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = archive.miniARchive;
+				PRODUCT_BUNDLE_IDENTIFIER = miniARchive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "miniARchive/miniARchive-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
