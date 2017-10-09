@@ -476,7 +476,7 @@
 				);
 				INFOPLIST_FILE = miniARchive/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = miniARchive;
+				PRODUCT_BUNDLE_IDENTIFIER = org.archive.miniARchive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -498,7 +498,7 @@
 				);
 				INFOPLIST_FILE = miniARchive/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = miniARchive;
+				PRODUCT_BUNDLE_IDENTIFIER = org.archive.miniARchive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;

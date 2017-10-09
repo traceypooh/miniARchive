@@ -14,7 +14,7 @@ import CoreImage
 import CocoaImageHashing
 
 class Scene: SKScene {
-    let matchingEndpoint = "https://archive.org/services/miniARchive.php"
+    let matchingEndpoint = "https://io.archive.org/services/miniARchive.php"
     let compareWidth:Int  = 1120 / 4 // 280
     let compareHeight:Int = 1824 / 4 // 456
     // ls|perl -pe 's/\.png$//'|quotem|tr "'" '"' ..
