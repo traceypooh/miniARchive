@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		407BBA171F82A35F00C097C6 /* CocoaImageHashing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 407BBA161F82A35F00C097C6 /* CocoaImageHashing.framework */; };
-		407BBA181F82A35F00C097C6 /* CocoaImageHashing.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 407BBA161F82A35F00C097C6 /* CocoaImageHashing.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		40EE8CCB1F7707310054D889 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE8CCA1F7707310054D889 /* AppDelegate.swift */; };
 		40EE8CCD1F7707310054D889 /* Scene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 40EE8CCC1F7707310054D889 /* Scene.sks */; };
 		40EE8CCF1F7707310054D889 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE8CCE1F7707310054D889 /* Scene.swift */; };
@@ -37,24 +35,9 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		407BBA191F82A35F00C097C6 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				407BBA181F82A35F00C097C6 /* CocoaImageHashing.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		4073DE511F853C0E0064E566 /* phash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = phash.cpp; path = miniARchive/PHASH/phash.cpp; sourceTree = "<group>"; };
 		4073DE531F853C220064E566 /* phash.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = phash.m; path = miniARchive/PHASH/phash.m; sourceTree = "<group>"; };
-		407BBA161F82A35F00C097C6 /* CocoaImageHashing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaImageHashing.framework; path = Carthage/Build/iOS/CocoaImageHashing.framework; sourceTree = "<group>"; };
 		40EE8CC71F7707310054D889 /* miniARchive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miniARchive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40EE8CCA1F7707310054D889 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40EE8CCC1F7707310054D889 /* Scene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Scene.sks; sourceTree = "<group>"; };
@@ -77,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				407BBA171F82A35F00C097C6 /* CocoaImageHashing.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,7 +92,6 @@
 		40EE8CBE1F7707310054D889 = {
 			isa = PBXGroup;
 			children = (
-				407BBA161F82A35F00C097C6 /* CocoaImageHashing.framework */,
 				40EE8CC91F7707310054D889 /* miniARchive */,
 				40EE8CE21F7707310054D889 /* miniARchiveTests */,
 				40EE8CED1F7707310054D889 /* miniARchiveUITests */,
@@ -172,7 +153,6 @@
 				40EE8CC31F7707310054D889 /* Sources */,
 				40EE8CC41F7707310054D889 /* Frameworks */,
 				40EE8CC51F7707310054D889 /* Resources */,
-				407BBA191F82A35F00C097C6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -476,7 +456,7 @@
 				);
 				INFOPLIST_FILE = miniARchive/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.archive.miniARchive;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mobile.waybackmachine.extension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -498,7 +478,7 @@
 				);
 				INFOPLIST_FILE = miniARchive/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.archive.miniARchive;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mobile.waybackmachine.extension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;

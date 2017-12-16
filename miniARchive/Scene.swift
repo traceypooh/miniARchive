@@ -11,14 +11,14 @@ import ARKit
 import UIKit
 import CoreImage
 
-import CocoaImageHashing
+// import CocoaImageHashing
 
 class Scene: SKScene {
     let matchingEndpoint = "https://io.archive.org/services/miniARchive.php"
     let compareWidth:Int  = 1120 / 4 // 280
     let compareHeight:Int = 1824 / 4 // 456
     // ls|perl -pe 's/\.png$//'|quotem|tr "'" '"' ..
-    let phashes: [String: OSHashDistanceType] = [
+    /*let phashes: [String: OSHashDistanceType] = [
         "AaronBinns": -7008665226162146816,
         "AaronSwartz": -111397507828879360,
         "AaronXimm": -5891631873931578880,
@@ -142,7 +142,7 @@ class Scene: SKScene {
         "TraceyJaquith": 2791693758624356864,
         "TrevorVonStein": -1387499911134152704,
         "VinayGoel": 7277463737655286272,
-    ]
+    ]*/
     
  
     
@@ -308,7 +308,7 @@ class Scene: SKScene {
     }
 
     
-    
+    /*
     func makePHASH(cam: UIImage) {
         let size = CGSize(width: compareWidth, height: compareHeight)
         
@@ -495,6 +495,7 @@ class Scene: SKScene {
         print("--> MAET: \(MAET / totalCompares)")
         print("--> they are \(numDifferences / totalCompares * 100.0)% different\n")
     }
+ */
 }
 
 
