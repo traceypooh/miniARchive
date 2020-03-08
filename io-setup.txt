@@ -1,0 +1,14 @@
+?? www/sf/miniARchive.ipa
+?? www/sf/miniARchive.png
+?? www/sf/miniARchive/
+________________________________________________________________________________
+
+Oct 11  2017 miniARchive
+Dec 20 00:12 miniARchive/ExportOptions.plist
+Dec 20 00:12 miniARchive/manifest.plist
+Dec 20 00:12 miniARchive/Packaging.log
+Dec 20 00:12 miniARchive/DistributionSummary.plist
+Dec 20 00:12 miniARchive/miniARchive.ipa
+Dec 20 00:12 miniARchive/miniARchive.png
+Oct 11  2017 miniARchive.ipa -> miniARchive/miniARchive.ipa
+Oct 11  2017 miniARchive.png -> miniARchive/miniARchive.png
